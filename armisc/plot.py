@@ -2,10 +2,6 @@
 add `plt.tight_layout()` at the end of your plots for consistent sizing.
 """
 
-# Author: Asif Rahman
-# Email: asif.rahman@philips.com
-# Created: January 25, 2019
-
 import matplotlib.pyplot as plt
 
 import matplotlib as mpl

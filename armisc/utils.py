@@ -1,9 +1,5 @@
 """Variety of utility functions to make working with dataframes, 
 loading files, and saving files easier.
-
-Author: Asif Rahman
-Email: asif.rahman@philips.com
-Created: January 25, 2019
 """
 
 from typing import List
