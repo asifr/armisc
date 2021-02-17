@@ -6,7 +6,7 @@ from .binning import apply_binning, binning
 from .imputation import fit_multiple_imputation, impute
 from . import ts
 from .windowed_view import windowed_view, segmentation
-from . import pyspark
+from .pyspark import assert_pyspark, load_spark
 from .trainer import (
     to_floats,
     Trainer,

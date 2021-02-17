@@ -7,7 +7,7 @@ import matplotlib as mpl
 
 mpl.rcParams["figure.dpi"] = 72
 
-__all__ = ["fontsize", "labels", "annotate"]
+__all__ = ["fontsize", "labels", "annotate", "panel_label"]
 
 
 def fontsize(ax, fz=14):
