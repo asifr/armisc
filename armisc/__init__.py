@@ -15,3 +15,4 @@ from .trainer import (
     warmup_learning_rate,
     TrainerOpts,
 )
+from . import models
