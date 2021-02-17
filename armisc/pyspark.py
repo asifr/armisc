@@ -2,10 +2,6 @@
 Creates a new connection to spark and makes available: 
 `spark`, `sq` (`SQLContext`), `F`, and `Window` in the global namespace.
 """
-from textwrap import dedent
-import findspark
-import os
-
 
 def _parse_master(pyspark_submit_args):
     sargs = pyspark_submit_args.split()
@@ -22,6 +18,10 @@ def initialize_spark(appName="MyApp", submit_args=None, memory=12):
     """
     This function assumes you already have SPARK_HOME and PYSPARK_SUBMIT_ARGS environment variables set
     """
+    import os
+    import findspark
+    from textwrap import dedent
+
     if "SPARK_HOME" not in os.environ:
         raise Exception("SPARK_HOME environmental variable not set.")
     if "PYSPARK_SUBMIT_ARGS" not in os.environ:

@@ -11,9 +11,6 @@ import pyarrow as pa
 import pyarrow.parquet as pq
 import numpy as np
 from IPython.display import HTML, display
-import tabulate
-from normality import stringify
-from hashlib import sha1
 
 
 def listfiles(path, ext=None):
@@ -299,6 +296,7 @@ def from_json(filename, default=[]):
 
 
 def astable(table):
+    import tabulate
     display(HTML(tabulate.tabulate(table, tablefmt="html")))
 
 
@@ -308,6 +306,7 @@ def roundn(x, prec=2, base=0.05):
 
 def key_bytes(key):
     """Convert the given data to a value appropriate for hashing."""
+    from normality import stringify
     if isinstance(key, bytes):
         return key
     key = stringify(key) or ""
@@ -316,6 +315,7 @@ def key_bytes(key):
 
 def compute_key(record, keys, key_prefix=None):
     """Generate a key for this record, based on the given fields."""
+    from hashlib import sha1
     seed = sha1(key_bytes(key_prefix))
     values = [key_bytes(record.get(k)) for k in keys]
     digest = seed.copy()
