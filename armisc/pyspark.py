@@ -7,10 +7,6 @@ import findspark
 import os
 
 
-def _formulate_pyspark_submit_args(submit_args=None):
-    pass
-
-
 def _parse_master(pyspark_submit_args):
     sargs = pyspark_submit_args.split()
     for j, sarg in enumerate(sargs):

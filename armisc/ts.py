@@ -41,15 +41,15 @@ def get_group_inds(a: np.ndarray) -> List[np.ndarray]:
     """Get indices after grouping a sorted list of IDs
     Args:
         a (np.ndarray): sorted list of IDs
-    Examplee:
+    Example:
         group_inds, group_ids, inds = get_group_inds(a)
     """
     u, inds = np.unique(a, return_index=True)
     return np.split(np.arange(len(a)), inds[1:]), u, inds
 
 
-def grouped_expanding_windows(x: np.ndarray, times: np.ndarray, maxt=720, maxwinsize: int=24) -> List[np.ndarray]:
-    group_inds, group_ids, _= get_group_inds(x)
+def grouped_expanding_windows(group_seq: np.ndarray, times: np.ndarray, maxt=720, maxwinsize: int=24) -> List[np.ndarray]:
+    group_inds, _, _= get_group_inds(group_seq)
     segment_inds = []
     for g in group_inds:
         maxlen = len(g)
@@ -59,3 +59,12 @@ def grouped_expanding_windows(x: np.ndarray, times: np.ndarray, maxt=720, maxwin
             i = np.where((times[ind[-1]] - times[ind]) <= maxt)[0]
             segment_inds.append(g[ind[i]])
     return segment_inds
+
+
+def ffill(arr: np.ndarray) -> np.ndarray:
+    arr = arr.T
+    mask = np.isnan(arr)
+    idx = np.where(~mask, np.arange(mask.shape[1]), 0)
+    np.maximum.accumulate(idx, axis=1, out=idx)
+    out = arr[np.arange(idx.shape[0])[:, None], idx].T
+    return out

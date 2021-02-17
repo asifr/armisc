@@ -3,7 +3,6 @@ add `plt.tight_layout()` at the end of your plots for consistent sizing.
 """
 
 import matplotlib.pyplot as plt
-
 import matplotlib as mpl
 
 mpl.rcParams["figure.dpi"] = 72

@@ -323,12 +323,3 @@ def compute_key(record, keys, key_prefix=None):
         digest.update(value)
     if digest.digest() != seed.digest():
         return digest.hexdigest()
-
-
-def ffill(arr: np.ndarray) -> np.ndarray:
-    arr = arr.T
-    mask = np.isnan(arr)
-    idx = np.where(~mask, np.arange(mask.shape[1]), 0)
-    np.maximum.accumulate(idx, axis=1, out=idx)
-    out = arr[np.arange(idx.shape[0])[:, None], idx].T
-    return out
