@@ -1,4 +1,5 @@
 import numpy as np
+import pandas as pd
 from sklearn.preprocessing import normalize
 from sklearn.base import clone
 from sklearn.linear_model import BayesianRidge
@@ -117,3 +118,10 @@ def impute(X, predictors):
         # updated missing values
         X_filled[missing_row_mask, feat_idx] = imputed_values
     return X_filled
+
+
+def knnimputer(df, n_neighbors=10):
+    from sklearn.impute import KNNImputer
+    imp = KNNImputer(n_neighbors=n_neighbors)
+    imp.fit(df)
+    return imp

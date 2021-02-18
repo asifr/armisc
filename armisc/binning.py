@@ -70,10 +70,20 @@ def apply_binning(X, bin_thresholds, assign_nan_to_unique_bin=False):
     return binned
 
 
-def binning(X, assign_nan_to_unique_bin=False, max_bins=256):
+def binning(X: np.ndarray, assign_nan_to_unique_bin: bool=False, max_bins: int=256):
     """Returns the binned design matrix, bin thresholds, and number of bins for each feature
     nan values are assigned to the largest bin, it may be desirable to assign binned values to
-    a unique bin of their own
+    a unique bin of their own.
+
+    Args:
+        X (np.ndarray): design matrix
+        assign_nan_to_unique_bin (bool): should missing values be assigned to a unique bin
+        max_bins (int): maximum number of bins
+
+    Returns:
+        X_binned (np.ndarray): binned design matrix
+        bin_thresholds (List[np.ndarray]): list of bin thresholds
+        actual_n_bins (List[int]): number of bins for each feature
     """
     bin_thresholds = _find_binning_thresholds(X, max_bins=max_bins)
     actual_n_bins = np.array(

@@ -2,8 +2,11 @@
 add `plt.tight_layout()` at the end of your plots for consistent sizing.
 """
 
+from typing import List
 import matplotlib.pyplot as plt
 import matplotlib as mpl
+import plotly.graph_objects as go
+
 
 mpl.rcParams["figure.dpi"] = 72
 
@@ -133,3 +136,88 @@ def panel_label(ax, s: str, x: float = -0.1, y: float = 1.15, fz: float = 16):
         va="top",
         ha="right",
     )
+
+
+def plotly_update_layout(
+    fig,
+    title=None,
+    height=300,
+    width=500,
+    margin=None,
+    font_family="Arial",
+    font_size=12,
+    template="none",
+    no_margin=False,
+):
+    fig_title = {}
+    if title is not None:
+        fig_title = {
+            'text': title,
+            'y':0.9,
+            'x':0.5,
+            'xanchor': 'center',
+            'yanchor': 'top'
+        }
+    fig_margin = dict(l=50, r=50, t=50, b=50)
+    if margin is not None:
+        fig_margin = margin
+    if no_margin:
+        fig_margin = dict(l=0, r=0, t=0, b=0)
+    # Update figure
+    fig.update_layout(
+        font_family=font_family,
+        font_size=font_size,
+        template=template,
+        title=fig_title,
+        height=height,
+        width=width,
+        margin=fig_margin,
+    )
+
+
+def plotly_legend_top(fig):
+    fig.update_layout(legend=dict(
+        orientation="h",
+        yanchor="bottom",
+        y=1.02,
+        xanchor="right",
+        x=1
+    ))
+
+def plotly_histograms(
+    x: List, 
+    names: List[str]=None, 
+    ylabel: str=None, 
+    xlabel: str=None, 
+    nbins: int=None,
+    histnorm='probability density'
+
+):
+    """
+    Args:
+        x (List): list of arrays for each trace
+        names (List[str]): list of names for each trace
+        ylabel (str): y-axis title
+        xlabel (str): x-axis title
+        nbins (int): number of histogram bins
+        histnorm (str): One of 'percent', 'probability', 'density', or 'probability density'
+    """
+    fig = go.Figure()
+
+    for i, xi in enumerate(x):
+        fig.add_traces(go.Histogram(
+            x=xi, 
+            histnorm=histnorm,
+            name=names[i] if names is not None else None,
+            nbinsx=nbins
+        ))
+    fig.update_layout(hovermode="x unified")
+    plotly_legend_top(fig)
+    if (histnorm == 'probability density') & (ylabel is None):
+        fig.update_yaxes(title_text='PDF')
+    else:
+        fig.update_yaxes(title_text=ylabel)
+    if xlabel is not None:
+        fig.update_xaxes(title_text=xlabel)
+
+    return fig
