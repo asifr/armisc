@@ -48,7 +48,7 @@ def get_group_inds(a: np.ndarray) -> List[np.ndarray]:
     return np.split(np.arange(len(a)), inds[1:]), u, inds
 
 
-def grouped_expanding_windows(group_seq: np.ndarray, times: np.ndarray, maxt=720, maxwinsize: int=24) -> List[np.ndarray]:
+def grouped_expanding_windows(group_seq: np.ndarray, times: np.ndarray, maxt=720, maxwinsize: int=24) -> List[List[int]]:
     group_inds, _, _= get_group_inds(group_seq)
     segment_inds = []
     for g in group_inds:
@@ -57,7 +57,7 @@ def grouped_expanding_windows(group_seq: np.ndarray, times: np.ndarray, maxt=720
         s, inds = windows(maxlen, winsize)
         for ind in inds:
             i = np.where((times[ind[-1]] - times[ind]) <= maxt)[0]
-            segment_inds.append(g[ind[i]])
+            segment_inds.append(list(g[ind[i]]))
     return segment_inds
 
 

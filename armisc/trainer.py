@@ -179,7 +179,7 @@ class Trainer():
 
             epoch += 1
 
-        writer.export_scalars_to_json(os.path.join('./', self.opts.name + '_scalars.json'))
+        writer.export_scalars_to_json(os.path.join('./trained_models/', self.opts.name + '_scalars.json'))
         writer.close()
 
     def save(self):

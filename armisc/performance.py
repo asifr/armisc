@@ -23,7 +23,8 @@ def performance(y_test, yhat_test):
     i_q = np.argmin(np.abs(roc_t - breakeven_thresh))
     breakeven_specificity = 1 - fpr[i_q]
 
-    auc = roc_auc_score(y_test, yhat_test)
+    auroc = roc_auc_score(y_test, yhat_test)
+    auprc = auc(r, p)
 
     spec90_ind = np.argmin(np.abs((1 - fpr) - 0.9))
     spec90_thresh = roc_t[spec90_ind]
@@ -38,7 +39,6 @@ def performance(y_test, yhat_test):
     spec95_precision = p[i_q]
 
     ap = average_precision_score(y_test, yhat_test)
-    auc_precision_recall = auc(r, p)
     prevalence = y_test.mean()
 
     return {
@@ -46,7 +46,7 @@ def performance(y_test, yhat_test):
         "breakeven_precision": breakeven_precision,
         "breakeven_recall": breakeven_recall,
         "breakeven_specificity": breakeven_specificity,
-        "auc": auc,
+        "auc": auroc,
         "auprc": auprc,
         "ap": ap,
         "spec90_thresh": spec90_thresh,
